@@ -128,7 +128,7 @@
     const title = repoConfig.name || repoConfig.repo;
     const formattedDate = repoConfig.date ? formatDate(repoConfig.date) : '-';
     // 构建跳转URL（使用绝对路径，Jekyll的pretty permalink会处理为/readme-viewer/）
-    const readmeUrl = `/readme-viewer/?owner=${encodeURIComponent(repoConfig.owner)}&repo=${encodeURIComponent(repoConfig.repo)}&title=${encodeURIComponent(title)}`;
+    const readmeUrl = `${window.siteBaseurl || ''}/readme-viewer/?owner=${encodeURIComponent(repoConfig.owner)}&repo=${encodeURIComponent(repoConfig.repo)}&title=${encodeURIComponent(title)}`;
 
     return `
       <div class="readme-item">
