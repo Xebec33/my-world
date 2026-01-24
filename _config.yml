@@ -13,8 +13,8 @@ description:      |
   古文字爱好者
   旅游达人
   喜欢研究奇奇怪怪的事情，开心就好~
-url:              http://hyde.getpoole.com
-baseurl:          /
+url:              "https://xebec33.github.io"
+baseurl:          "/my-world"
 
 author:
   name:           'Mark Otto'
