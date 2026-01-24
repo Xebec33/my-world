@@ -1,0 +1,31 @@
+# Dependencies
+markdown:         kramdown
+highlighter:      rouge
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            珝玹Xebec
+tagline:          '我的个人网站'
+description:      |
+  计算机技术者
+  古文字爱好者
+  旅游达人
+  喜欢研究奇奇怪怪的事情，开心就好~
+url:              http://hyde.getpoole.com
+baseurl:          /
+
+author:
+  name:           'Mark Otto'
+  url:            https://twitter.com/mdo
+
+paginate:         5
+plugins:
+  - jekyll-paginate
+
+# Custom vars
+version:          2.1.0
+
+github:
+  repo:           https://github.com/poole/hyde
