@@ -20,7 +20,7 @@
       {% for page_title in ordered_pages %}
         {% for node in site.pages %}
           {% if node.title == page_title and node.layout == "page" %}
-            <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{{ node.title }}</a>
+            <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url | relative_url }}">{{ node.title }}</a>
           {% endif %}
         {% endfor %}
       {% endfor %}
