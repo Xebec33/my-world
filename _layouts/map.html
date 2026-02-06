@@ -1,0 +1,70 @@
+---
+layout: default
+---
+
+<div class="page">
+  <h1 class="page-title">{{ page.title }}</h1>
+  <div id="world-map" style="width: 100%; height: 400px;"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script>
+    (function() {
+      var chart = echarts.init(document.getElementById('world-map'));
+      // 去过的国家列表（可在此修改，visitDate 填写到达日期）
+      var visitedCountries = [
+        { name: 'China', visitDate: '' },
+        { name: 'Japan', visitDate: '2024-06-26' },
+        { name: 'Azerbaijan', visitDate: '2025-02-05' },
+        { name: 'Georgia', visitDate: '2025-02-06' },
+        { name: 'Armenia', visitDate: '2025-02-11' },
+        { name: 'Russia', visitDate: '2025-02-13' },
+        { name: 'Egypt', visitDate: '2025-07-24' },
+        { name: 'United Arab Emirates', visitDate: '2025-08-09' },
+        { name: 'Oman', visitDate: '2025-08-10' },
+        { name: 'Vietnam', visitDate: '2026-01-27' },
+        { name: 'Singapore', visitDate: '2026-01-29' },
+        { name: 'Malaysia', visitDate: '2026-01-30' },
+        { name: 'Thailand', visitDate: '2026-02-02' }
+      ];
+      var mapData = visitedCountries.map(function(item) {
+        var color = item.name === 'China' ? '#900021' : '#002FA7';
+        return { name: item.name, value: 0, visitDate: item.visitDate, itemStyle: { areaColor: color } };
+      });
+
+      fetch('https://cdn.jsdelivr.net/gh/apache/echarts@5.4.3/test/data/map/json/world.json')
+        .then(function(res) { return res.json(); })
+        .then(function(worldJson) {
+          echarts.registerMap('world', worldJson);
+          chart.setOption({
+            tooltip: {
+              trigger: 'item',
+              formatter: function(params) {
+                var name = params.name;
+                var date = params.data && params.data.visitDate ? params.data.visitDate : '';
+                return date ? name + '<br/>' + date : name;
+              }
+            },
+            series: [{
+              type: 'map',
+              map: 'world',
+              roam: true,
+              selectedMode: false,
+              center: [5, 10],
+              zoom: 1.2,
+              itemStyle: {
+                areaColor: '#f0f0f0',
+                borderColor: '#ccc'
+              },
+              emphasis: {
+                itemStyle: { areaColor: '#91cc75' },
+                label: { show: false }
+              },
+              data: mapData
+            }]
+          });
+        })
+        .catch(function(err) { console.error('地图加载失败:', err); });
+      window.addEventListener('resize', function() { chart.resize(); });
+    })();
+  </script>
+</div>

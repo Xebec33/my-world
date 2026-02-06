@@ -1,0 +1,74 @@
+---
+layout: default
+---
+
+<div class="page">
+  <h1 class="page-title">{{ page.title }}</h1>
+  <div id="china-map" style="width: 100%; height: 400px;"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script>
+    (function() {
+      var chart = echarts.init(document.getElementById('china-map'));
+      // 去过的省份列表（可在此修改，visitDate 填写到达日期，名称需与 GeoJSON 中的省份名一致）
+      var visitedProvinces = [
+        { name: '江苏', visitDate: '' },
+        { name: '安徽', visitDate: '' },
+        { name: '浙江', visitDate: '' },
+        { name: '上海', visitDate: '' },
+        { name: '山东', visitDate: '' },
+        { name: '台湾', visitDate: '2015-07-06' },
+        { name: '重庆', visitDate: '2023-07' },
+        { name: '四川', visitDate: '2023-07' },
+        { name: '福建', visitDate: '2024-05-01' },
+        { name: '广西', visitDate: '2024-07-27' },
+        { name: '北京', visitDate: '2025-02-04' },
+        { name: '湖北', visitDate: '2025-07-07' },
+        { name: '青海', visitDate: '2025-07-11' },
+        { name: '甘肃', visitDate: '2025-07-16' },
+        { name: '广东', visitDate: '2025-07-23' },
+        { name: '香港', visitDate: '2025-07-23' },
+        { name: '甘肃', visitDate: '2025-07-16' },
+        { name: '海南', visitDate: '2025-08-16' }
+      ];
+      var mapData = visitedProvinces.map(function(item) {
+        var color = item.name === '江苏' ? '#900021' : '#002FA7';
+        return { name: item.name, value: 0, visitDate: item.visitDate, itemStyle: { areaColor: color } };
+      });
+
+      fetch('https://cdn.jsdelivr.net/gh/apache/echarts@5.4.3/test/data/map/json/china.json')
+        .then(function(res) { return res.json(); })
+        .then(function(chinaJson) {
+          echarts.registerMap('china', chinaJson);
+          chart.setOption({
+            tooltip: {
+              trigger: 'item',
+              formatter: function(params) {
+                var name = params.name;
+                var date = params.data && params.data.visitDate ? params.data.visitDate : '';
+                return date ? name + '<br/>' + date : name;
+              }
+            },
+            series: [{
+              type: 'map',
+              map: 'china',
+              roam: true,
+              selectedMode: false,
+              zoom: 1.2,
+              itemStyle: {
+                areaColor: '#f0f0f0',
+                borderColor: '#ccc'
+              },
+              emphasis: {
+                itemStyle: { areaColor: '#91cc75' },
+                label: { show: false }
+              },
+              data: mapData
+            }]
+          });
+        })
+        .catch(function(err) { console.error('地图加载失败:', err); });
+      window.addEventListener('resize', function() { chart.resize(); });
+    })();
+  </script>
+</div>
