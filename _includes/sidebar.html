@@ -16,7 +16,7 @@
         Manually ordered navigation items
       {% endcomment %}
       
-      {% assign ordered_pages = "小项目,古文字,旅游,语言,联系我" | split: "," %}
+      {% assign ordered_pages = "小项目,古文字&五笔,旅游,语言,联系我" | split: "," %}
       {% for page_title in ordered_pages %}
         {% for node in site.pages %}
           {% if node.title == page_title and node.layout == "page" %}
