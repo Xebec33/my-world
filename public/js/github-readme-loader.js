@@ -2,7 +2,7 @@
 (function() {
   'use strict';
 
-  // 检查是否在古文字页面
+  // 检查是否在文字&输入法页面
   if (!window.githubRepos || window.githubRepos.length === 0) {
     return;
   }
